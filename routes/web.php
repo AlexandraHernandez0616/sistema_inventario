@@ -1,6 +1,7 @@
 <?php
-
-use app\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -8,7 +9,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $role = auth()->user()->role_id;
+    /** @var User $user */
+    $user = Auth::user();
+    $role = $user->role_id;
     if ($role == 1) {
         return view('admin.dashboard');
     } elseif ($role == 2) {
